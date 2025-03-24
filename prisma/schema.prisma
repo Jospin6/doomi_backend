@@ -93,7 +93,11 @@ enum SubscriptionStatus {
 
 enum UserRole {
   USER
-  ADMIN
+  ADMIN           
+  SUPER_ADMIN     
+  MODERATOR       
+  SUPPORT        
+  CONTENT_MANAGER
 }
 
 model Category {
