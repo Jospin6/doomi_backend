@@ -12,9 +12,10 @@ import { CategoryModule } from './category/category.module';
 import { SubCategoryModule } from './sub-category/sub-category.module';
 import { ListingModule } from './listing/listing.module';
 import { BoostModule } from './boost/boost.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule, BoostModule],
+  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule, BoostModule, FavoriteModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
