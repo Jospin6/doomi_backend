@@ -10,9 +10,10 @@ import { BusinessProfileModule } from './business-profile/business-profile.modul
 import { SubscriptionModule } from './subscription/subscription.module';
 import { CategoryModule } from './category/category.module';
 import { SubCategoryModule } from './sub-category/sub-category.module';
+import { ListingModule } from './listing/listing.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule],
+  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
