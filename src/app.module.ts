@@ -11,9 +11,10 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { CategoryModule } from './category/category.module';
 import { SubCategoryModule } from './sub-category/sub-category.module';
 import { ListingModule } from './listing/listing.module';
+import { BoostModule } from './boost/boost.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule],
+  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule, BoostModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
