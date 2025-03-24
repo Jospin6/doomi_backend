@@ -6,9 +6,10 @@ import { PrismaService } from './prisma/prisma.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
+import { BusinessProfileModule } from './business-profile/business-profile.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule],
+  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
