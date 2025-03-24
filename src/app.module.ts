@@ -8,9 +8,11 @@ import { UserModule } from './user/user.module';
 import { LocationModule } from './location/location.module';
 import { BusinessProfileModule } from './business-profile/business-profile.module';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { CategoryModule } from './category/category.module';
+import { SubCategoryModule } from './sub-category/sub-category.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule],
+  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
