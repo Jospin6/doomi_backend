@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBoostDto } from './dto/create-boost.dto';
-import { UpdateBoostDto } from './dto/update-boost.dto';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BoostService {
-  create(createBoostDto: CreateBoostDto) {
-    return 'This action adds a new boost';
+  constructor (private readonly prisma: PrismaService) {}
+  async create(createBoostDto: Prisma.BoostCreateInput) {
+    return await this.prisma.boost.create({data: {...createBoostDto}});
   }
 
-  findAll() {
-    return `This action returns all boost`;
+  async findAll() {
+    return await this.prisma.boost.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} boost`;
+  async findOne(id: string) {
+    return await this.prisma.boost.findUnique({where: {id,}});
   }
 
-  update(id: number, updateBoostDto: UpdateBoostDto) {
-    return `This action updates a #${id} boost`;
+  async update(id: string, updateBoostDto: Prisma.BoostUpdateInput) {
+    return await this.prisma.boost.update({
+      where: {id,},
+      data: {...updateBoostDto}
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} boost`;
+  async remove(id: string) {
+    return await this.prisma.boost.delete({where: {id,}});
   }
 }

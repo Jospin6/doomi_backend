@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { BoostService } from './boost.service';
-import { CreateBoostDto } from './dto/create-boost.dto';
-import { UpdateBoostDto } from './dto/update-boost.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('boost')
 export class BoostController {
   constructor(private readonly boostService: BoostService) {}
 
   @Post()
-  create(@Body() createBoostDto: CreateBoostDto) {
+  create(@Body() createBoostDto: Prisma.BoostCreateInput) {
     return this.boostService.create(createBoostDto);
   }
 
@@ -19,16 +18,16 @@ export class BoostController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.boostService.findOne(+id);
+    return this.boostService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoostDto: UpdateBoostDto) {
-    return this.boostService.update(+id, updateBoostDto);
+  update(@Param('id') id: string, @Body() updateBoostDto: Prisma.BoostUpdateInput) {
+    return this.boostService.update(id, updateBoostDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.boostService.remove(+id);
+    return this.boostService.remove(id);
   }
 }

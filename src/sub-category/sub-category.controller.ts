@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SubCategoryService } from './sub-category.service';
-import { CreateSubCategoryDto } from './dto/create-sub-category.dto';
-import { UpdateSubCategoryDto } from './dto/update-sub-category.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('sub-category')
 export class SubCategoryController {
   constructor(private readonly subCategoryService: SubCategoryService) {}
 
   @Post()
-  create(@Body() createSubCategoryDto: CreateSubCategoryDto) {
+  create(@Body() createSubCategoryDto: Prisma.SubCategoryCreateInput) {
     return this.subCategoryService.create(createSubCategoryDto);
   }
 
@@ -19,16 +18,16 @@ export class SubCategoryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.subCategoryService.findOne(+id);
+    return this.subCategoryService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubCategoryDto: UpdateSubCategoryDto) {
-    return this.subCategoryService.update(+id, updateSubCategoryDto);
+  update(@Param('id') id: string, @Body() updateSubCategoryDto: Prisma.SubCategoryUpdateInput) {
+    return this.subCategoryService.update(id, updateSubCategoryDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.subCategoryService.remove(+id);
+    return this.subCategoryService.remove(id);
   }
 }

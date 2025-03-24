@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
-import { CreateListingDto } from './dto/create-listing.dto';
-import { UpdateListingDto } from './dto/update-listing.dto';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ListingService {
-  create(createListingDto: CreateListingDto) {
-    return 'This action adds a new listing';
+  constructor (private readonly prisma: PrismaService) {}
+  async create(createListingDto: Prisma.ListingCreateInput) {
+    return await this.prisma.listing.create({data: {...createListingDto}});
   }
 
-  findAll() {
-    return `This action returns all listing`;
+  async findAll() {
+    return await this.prisma.listing.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} listing`;
+  async findOne(id: string) {
+    return await this.prisma.listing.findUnique({where: {id,}});
   }
 
-  update(id: number, updateListingDto: UpdateListingDto) {
-    return `This action updates a #${id} listing`;
+  async update(id: string, updateListingDto: Prisma.ListingUpdateInput) {
+    return await this.prisma.listing.update({
+      where: {id,},
+      data: {...updateListingDto}
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} listing`;
+  async remove(id: string) {
+    return await this.prisma.listing.delete({where: {id,}});
   }
 }

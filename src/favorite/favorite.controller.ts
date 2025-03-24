@@ -1,14 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { FavoriteService } from './favorite.service';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('favorite')
 export class FavoriteController {
   constructor(private readonly favoriteService: FavoriteService) {}
 
   @Post()
-  create(@Body() createFavoriteDto: CreateFavoriteDto) {
+  create(@Body() createFavoriteDto: Prisma.FavoriteCreateInput) {
     return this.favoriteService.create(createFavoriteDto);
   }
 
@@ -19,16 +18,16 @@ export class FavoriteController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.favoriteService.findOne(+id);
+    return this.favoriteService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFavoriteDto: UpdateFavoriteDto) {
-    return this.favoriteService.update(+id, updateFavoriteDto);
+  update(@Param('id') id: string, @Body() updateFavoriteDto: Prisma.FavoriteUpdateInput) {
+    return this.favoriteService.update(id, updateFavoriteDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.favoriteService.remove(+id);
+    return this.favoriteService.remove(id);
   }
 }

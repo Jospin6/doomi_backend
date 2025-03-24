@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBusinessProfileDto } from './dto/create-business-profile.dto';
-import { UpdateBusinessProfileDto } from './dto/update-business-profile.dto';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class BusinessProfileService {
-  create(createBusinessProfileDto: CreateBusinessProfileDto) {
-    return 'This action adds a new businessProfile';
+  constructor (private readonly prisma: PrismaService) {}
+  async create(createBusinessProfileDto: Prisma.BusinessProfileCreateInput) {
+    return await this.prisma.businessProfile.create({
+      data: {...createBusinessProfileDto}
+    });
   }
 
-  findAll() {
-    return `This action returns all businessProfile`;
+  async findAll() {
+    return await this.prisma.businessProfile.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} businessProfile`;
+  async findOne(id: string) {
+    return await this.prisma.businessProfile.findUnique({where: {id,}});
   }
 
-  update(id: number, updateBusinessProfileDto: UpdateBusinessProfileDto) {
-    return `This action updates a #${id} businessProfile`;
+  async update(id: string, updateBusinessProfileDto: Prisma.BusinessProfileUpdateInput) {
+    return await this.prisma.businessProfile.update({
+      where: {id,},
+      data: {...updateBusinessProfileDto}
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} businessProfile`;
+  async remove(id: string) {
+    return await this.prisma.businessProfile.delete({where: {id,}});
   }
 }

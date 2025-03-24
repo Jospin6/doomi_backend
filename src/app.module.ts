@@ -15,7 +15,18 @@ import { BoostModule } from './boost/boost.module';
 import { FavoriteModule } from './favorite/favorite.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UserModule, LocationModule, BusinessProfileModule, SubscriptionModule, CategoryModule, SubCategoryModule, ListingModule, BoostModule, FavoriteModule],
+  imports: [
+    AuthModule, 
+    PrismaModule, 
+    UserModule, 
+    LocationModule, 
+    BusinessProfileModule, 
+    SubscriptionModule, 
+    CategoryModule, 
+    SubCategoryModule, 
+    ListingModule, 
+    BoostModule, 
+    FavoriteModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
