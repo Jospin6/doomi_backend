@@ -101,7 +101,7 @@ enum UserRole {
 }
 
 model Category {
-  id            String        @id @default(cuid())
+  id            String        @id @default(uuid())
   name          String        @unique
   image         String
   description   String?
@@ -110,7 +110,7 @@ model Category {
 }
 
 model SubCategory {
-  id          String    @id @default(cuid())
+  id          String    @id @default(uuid())
   name        String
   images         String[]
   description String?
@@ -123,7 +123,7 @@ model SubCategory {
 }
 
 model Listing {
-  id            String        @id @default(cuid())
+  id            String        @id @default(uuid())
   title         String
   description   String
   price         Float

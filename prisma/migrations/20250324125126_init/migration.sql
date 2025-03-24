@@ -79,6 +79,8 @@ CREATE TABLE "Subscription" (
 CREATE TABLE "Category" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
@@ -88,6 +90,8 @@ CREATE TABLE "Category" (
 CREATE TABLE "SubCategory" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "images" TEXT[],
+    "description" TEXT,
     "categoryId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
