@@ -60,11 +60,11 @@ enum Role {
 }
 
 model BusinessProfile {
-  id          String  @id @default(uuid())
-  userId      String  @unique
-  user        User    @relation(fields: [userId], references: [id])
-  vatNumber   String?
-  website     String?
+  id        String  @id @default(uuid())
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id])
+  vatNumber String?
+  website   String?
 }
 
 model Subscription {
@@ -93,27 +93,31 @@ enum SubscriptionStatus {
 
 enum UserRole {
   USER
-  ADMIN           
-  SUPER_ADMIN     
-  MODERATOR       
-  SUPPORT        
+  ADMIN
+  SUPER_ADMIN
+  MODERATOR
+  SUPPORT
   CONTENT_MANAGER
 }
 
 model Category {
   id            String        @id @default(cuid())
   name          String        @unique
+  image         String
+  description   String?
   subCategories SubCategory[]
   createdAt     DateTime      @default(now())
 }
 
 model SubCategory {
-  id         String    @id @default(cuid())
-  name       String
-  category   Category  @relation(fields: [categoryId], references: [id])
-  categoryId String
-  listings   Listing[]
-  createdAt  DateTime  @default(now())
+  id          String    @id @default(cuid())
+  name        String
+  images         String[]
+  description String?
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  listings    Listing[]
+  createdAt   DateTime  @default(now())
 
   @@unique([name, categoryId])
 }
