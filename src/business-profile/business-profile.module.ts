@@ -4,8 +4,9 @@ import { BusinessProfileController } from './business-profile.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  exports: [PrismaModule],
+  imports: [PrismaModule],
   controllers: [BusinessProfileController],
   providers: [BusinessProfileService],
+  exports: [BusinessProfileService],
 })
 export class BusinessProfileModule {}

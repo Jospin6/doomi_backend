@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [SubCategoryController],
   providers: [SubCategoryService],
+  exports: [SubCategoryService],
 })
 export class SubCategoryModule {}

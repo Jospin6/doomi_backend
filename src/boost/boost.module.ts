@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [BoostController],
   providers: [BoostService],
+  exports: [BoostService],
 })
 export class BoostModule {}

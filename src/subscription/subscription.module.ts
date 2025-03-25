@@ -4,8 +4,9 @@ import { SubscriptionController } from './subscription.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
-  exports: [PrismaModule],
+  imports: [PrismaModule],
   controllers: [SubscriptionController],
   providers: [SubscriptionService],
+  exports: [SubscriptionService],
 })
 export class SubscriptionModule {}
