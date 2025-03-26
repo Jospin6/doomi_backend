@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles, Query } from '@nestjs/common';
 import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { ListingService } from './listing.service';
 import { Prisma } from '@prisma/client';
@@ -30,8 +30,8 @@ export class ListingController {
   }
 
   @Get()
-  findAll() {
-    return this.listingService.findAll();
+  findAll(@Query('locationId') locationId?: string) {
+    return this.listingService.findAll(locationId);
   }
 
   @Get(':id')
