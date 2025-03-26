@@ -212,6 +212,8 @@ model ConversationParticipant {
   user           User         @relation(fields: [userId], references: [id])
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   joinedAt       DateTime     @default(now())
+
+  @@unique([conversationId, userId]) 
 }
 
 model Message {

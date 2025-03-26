@@ -13,6 +13,11 @@ import { SubCategoryModule } from './sub-category/sub-category.module';
 import { ListingModule } from './listing/listing.module';
 import { BoostModule } from './boost/boost.module';
 import { FavoriteModule } from './favorite/favorite.module';
+import { ConversationService } from './conversation/conversation.service';
+import { MessageService } from './message/message.service';
+import { ParticipantService } from './participant/participant.service';
+import { ConversationController } from './conversation/conversation.controller';
+import { ConversationModule } from './conversation/conversation.module';
 
 @Module({
   imports: [
@@ -26,8 +31,8 @@ import { FavoriteModule } from './favorite/favorite.module';
     SubCategoryModule, 
     ListingModule, 
     BoostModule, 
-    FavoriteModule],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+    FavoriteModule, ConversationModule],
+  controllers: [AppController, ConversationController],
+  providers: [AppService, PrismaService, ConversationService, MessageService, ParticipantService],
 })
 export class AppModule {}
