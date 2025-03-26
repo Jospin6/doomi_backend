@@ -11,7 +11,7 @@ export class AuthController {
         return this.authService.signup(signupUserDto);
     }
 
-    @Post('login')
+    @Post('signin')
     async login(
         @Body('email') email: string,
         @Body('password') password: string

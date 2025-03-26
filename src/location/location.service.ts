@@ -6,31 +6,38 @@ import { Prisma } from '@prisma/client';
 export class LocationService {
   constructor(
     private readonly prisma: PrismaService,
-  ) {}
+  ) { }
   async create(createLocationDto: Prisma.LocationCreateInput) {
     return await this.prisma.location.create({
-      data: {...createLocationDto}
+      data: { ...createLocationDto }
     });
   }
 
-  async findAll() {
-    return await this.prisma.location.findMany();
+  async findAll(q?: string) {
+    return await this.prisma.location.findMany({
+      where: {
+        OR: [
+          { country: q },
+          { city: q }
+        ]
+      }
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.location.findUnique({
-      where: {id,}
+      where: { id, }
     });
   }
 
   async update(id: string, updateLocationDto: Prisma.LocationUpdateInput) {
     return await this.prisma.location.update({
-      where: {id,},
-      data: {...updateLocationDto}
+      where: { id, },
+      data: { ...updateLocationDto }
     });
   }
 
   async remove(id: string) {
-    return await this.prisma.location.delete({where: {id,}});
+    return await this.prisma.location.delete({ where: { id, } });
   }
 }

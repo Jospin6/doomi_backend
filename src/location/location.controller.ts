@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { Prisma } from '@prisma/client';
 
@@ -12,8 +12,8 @@ export class LocationController {
   }
 
   @Get()
-  findAll() {
-    return this.locationService.findAll();
+  findAll(@Query('q') q?: string) {
+    return this.locationService.findAll(q);
   }
 
   @Get(':id')

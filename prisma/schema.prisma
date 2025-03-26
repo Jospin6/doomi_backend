@@ -14,24 +14,28 @@ datasource db {
 }
 
 model User {
-  id                String           @id @default(uuid())
-  name              String
-  email             String           @unique
-  password          String
-  phoneNumber       String?
-  adress            String?
-  avatar            String?
-  role              Role             @default(USER)
-  profileType       ProfileType
-  businessProfile   BusinessProfile?
-  locationId        String?
-  location          Location?        @relation(fields: [locationId], references: [id])
-  businessProfileId String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  Listing           Listing[]
-  Subscription      Subscription[]
-  Favorite          Favorite[]
+  id                      String                    @id @default(uuid())
+  name                    String
+  email                   String                    @unique
+  password                String
+  phoneNumber             String?
+  adress                  String?
+  avatar                  String?
+  role                    Role                      @default(USER)
+  profileType             ProfileType
+  businessProfile         BusinessProfile?
+  locationId              String?
+  location                Location?                 @relation(fields: [locationId], references: [id])
+  businessProfileId       String?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  Listing                 Listing[]
+  Subscription            Subscription[]
+  Favorite                Favorite[]
+  ConversationParticipant ConversationParticipant[]
+  Message                 Message[]
+  Following               Follower[]                @relation("Following")
+  Follower                Follower[]                @relation("Follower")
 
   @@index([email])
 }
@@ -40,8 +44,8 @@ model Location {
   id        String   @id @default(uuid())
   country   String
   city      String
-  latitude  Float
-  longitude Float
+  latitude  String?
+  longitude String?
   createdAt DateTime @default(now())
 
   User    User[]
@@ -60,11 +64,14 @@ enum Role {
 }
 
 model BusinessProfile {
-  id        String  @id @default(uuid())
-  userId    String  @unique
-  user      User    @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
   vatNumber String?
   website   String?
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Subscription {
@@ -112,7 +119,7 @@ model Category {
 model SubCategory {
   id          String    @id @default(uuid())
   name        String
-  images         String[]
+  images      String[]
   description String?
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  String
@@ -127,7 +134,7 @@ model Listing {
   title         String
   description   String
   price         Float
-  currency      String // "EUR", "USD", "RWF", etc.
+  currency      String
   user          User          @relation(fields: [userId], references: [id])
   userId        String
   subCategory   SubCategory   @relation(fields: [subCategoryId], references: [id])
@@ -183,7 +190,52 @@ enum BoostStatus {
 }
 
 enum BoostType {
-  TOP_LISTING // Annonce en haut de la liste
-  HIGHLIGHTED // Annonce mise en avant
-  FEATURED // Annonce avec plus de visibilité
+  TOP_LISTING
+  HIGHLIGHTED
+  FEATURED
+}
+
+model Conversation {
+  id        String                    @id @default(uuid())
+  isGroup   Boolean                   @default(false)
+  name      String? // Nom du groupe (si c'est un groupe)
+  users     ConversationParticipant[]
+  messages  Message[]
+  createdAt DateTime                  @default(now())
+  updatedAt DateTime                  @updatedAt
+}
+
+model ConversationParticipant {
+  id             String       @id @default(uuid())
+  userId         String
+  conversationId String
+  user           User         @relation(fields: [userId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  joinedAt       DateTime     @default(now())
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  content        String
+  sentAt         DateTime     @default(now())
+  senderId       String
+  conversationId String
+  sender         User         @relation(fields: [senderId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  isRead         Boolean      @default(false)
+
+  @@index([senderId])
+  @@index([conversationId])
+}
+
+model Follower {
+  id          String   @id @default(uuid())
+  followerId  String
+  followingId String
+  followedAt  DateTime @default(now())
+
+  follower  User @relation("Following", fields: [followerId], references: [id])
+  following User @relation("Follower", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
 }
