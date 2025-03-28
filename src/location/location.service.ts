@@ -15,12 +15,11 @@ export class LocationService {
 
   async findAll(q?: string) {
     return await this.prisma.location.findMany({
-      where: {
-        OR: [
-          { country: q },
-          { city: q }
-        ]
-      }
+      where: q
+        ? {
+          OR: [{ country: q }, { city: q }],
+        }
+        : undefined,
     });
   }
 

@@ -21,8 +21,8 @@ export class AuthController {
     }
 
     @Get("me")
-    @UseGuards(JwtGuard) // 🔐 Protège l'endpoint avec JWT
+    @UseGuards(JwtGuard)
     getProfile(@Req() req) {
-        return req.user; // L'utilisateur est récupéré depuis le token
+        return req.user;
     }
 }

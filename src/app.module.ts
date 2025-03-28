@@ -18,6 +18,7 @@ import { MessageService } from './message/message.service';
 import { ParticipantService } from './participant/participant.service';
 import { ConversationController } from './conversation/conversation.controller';
 import { ConversationModule } from './conversation/conversation.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { ConversationModule } from './conversation/conversation.module';
     SubCategoryModule, 
     ListingModule, 
     BoostModule, 
-    FavoriteModule, ConversationModule],
+    FavoriteModule, ConversationModule, CloudinaryModule],
   controllers: [AppController, ConversationController],
   providers: [AppService, PrismaService, ConversationService, MessageService, ParticipantService],
 })

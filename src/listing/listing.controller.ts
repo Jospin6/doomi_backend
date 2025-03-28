@@ -1,26 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFiles, Query } from '@nestjs/common';
-import { FileFieldsInterceptor } from "@nestjs/platform-express";
+import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { ListingService } from './listing.service';
 import { Prisma } from '@prisma/client';
-import { multerOptions } from "../common/multer.config";
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Controller('listing')
 export class ListingController {
-  constructor(private readonly listingService: ListingService) { }
+  constructor(
+    private readonly listingService: ListingService,
+    private readonly cloudinaryService: CloudinaryService) { }
 
   @Post()
-  @UseInterceptors(FileFieldsInterceptor([{ name: "images", maxCount: 5 }], multerOptions))
-  create(
-    @UploadedFiles() files: { images?: Array<Express.Multer.File> },
+  @UseInterceptors(FilesInterceptor('images[]', 5))
+  async create(
+    @UploadedFiles() files: Express.Multer.File[],
     @Body() createListingDto: Prisma.ListingCreateInput) {
     try {
-      if (!files || !files.images || files.images.length === 0) {
-        return { message: "No images uploaded" };
-      }
+      console.log("putain file: ", files)
+      console.log('Données reçues :', createListingDto);
+      const imageUrls = await Promise.all(
+        files.map(async (file) => {
+          const uploadedImage = await this.cloudinaryService.uploadFile(file);
+          return uploadedImage.secure_url;
+        })
+      );
 
-      const imageUrls = files.images.map((file) => file.path);
-
-      createListingDto.images = imageUrls;
+      const listingData = {
+        ...createListingDto,
+        images: imageUrls,
+      };
 
       return this.listingService.create(createListingDto);
     } catch (error) {
